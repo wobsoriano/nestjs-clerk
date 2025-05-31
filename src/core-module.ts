@@ -6,7 +6,7 @@ import {
 	type Provider,
 } from '@nestjs/common';
 import { CLERK_CLIENT_OPTIONS, CLERK_CLIENT_TOKEN } from './constants';
-import type { ClerkAsyncOptions, ClerkOptionsFactory } from './interfaces';
+import type { ClerkAsyncOptions } from './interfaces';
 
 @Global()
 @Module({})
@@ -31,44 +31,17 @@ export class ClerkCoreModule {
 			useFactory: (options: ClerkOptions) => createClerkClient(options),
 		};
 
+		const optionsProvider: Provider = {
+			inject: asyncOptions.inject || [],
+			provide: CLERK_CLIENT_OPTIONS,
+			useFactory: asyncOptions.useFactory,
+		};
+
 		return {
 			exports: [clerkClient],
 			imports: asyncOptions.imports,
 			module: ClerkCoreModule,
-			providers: [...ClerkCoreModule.createAsyncProviders(asyncOptions), clerkClient],
-		};
-	}
-
-	private static createAsyncProviders(options: ClerkAsyncOptions): Provider[] {
-		if (options.useExisting || options.useFactory) {
-			return [ClerkCoreModule.createAsyncOptionsProvider(options)];
-		}
-
-		return [
-			ClerkCoreModule.createAsyncOptionsProvider(options),
-			{
-				provide: options.useClass!,
-				useClass: options.useClass!,
-			},
-		];
-	}
-
-	private static createAsyncOptionsProvider(
-		options: ClerkAsyncOptions,
-	): Provider {
-		if (options.useFactory) {
-			return {
-				inject: options.inject || [],
-				provide: CLERK_CLIENT_OPTIONS,
-				useFactory: options.useFactory,
-			};
-		}
-
-		return {
-			inject: [options.useExisting || options.useClass!],
-			provide: CLERK_CLIENT_OPTIONS,
-			useFactory: (optionsFactory: ClerkOptionsFactory) =>
-				optionsFactory.createClerkOptions(),
+			providers: [optionsProvider, clerkClient],
 		};
 	}
 }

@@ -12,7 +12,7 @@ import { ClerkMiddleware } from './middleware';
 @Module({})
 export class ClerkModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {
-		consumer.apply(ClerkMiddleware).forRoutes('*');
+		consumer.apply(ClerkMiddleware).forRoutes('{*splat}');
 	}
 
 	public static forRoot(options: ClerkOptions): DynamicModule {

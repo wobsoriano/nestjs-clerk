@@ -1,9 +1,10 @@
 import {
 	type ExecutionContext,
 	Inject,
+	SetMetadata,
 	createParamDecorator,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+import type { OrganizationCustomRoleKey } from '@clerk/types';
 import { CLERK_CLIENT_TOKEN } from './constants';
 
 export function Client() {
@@ -17,6 +18,6 @@ export const Auth = createParamDecorator(
 	},
 );
 
-export const Role = Reflector.createDecorator<string>();
+export const Role = (role: OrganizationCustomRoleKey) => SetMetadata('role', role);
 
-export const Permission = Reflector.createDecorator<string>();
+export const Permission = (permission: string) => SetMetadata('permission', permission);
