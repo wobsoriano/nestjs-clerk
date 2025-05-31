@@ -21,15 +21,14 @@ Import the `ClerkModule` into the root module.
 
 ```ts
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { ClerkModule } from 'nestjs-clerk';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
+    ClerkModule.forRoot({
+      publishableKey: '',
+      secretKey: '',
     }),
-    ClerkModule.forRoot(),
   ],
 })
 export class AppModule {}
@@ -40,7 +39,7 @@ export class AppModule {}
 ```ts
 import { Get } from '@nestjs/common';
 import { Auth, Client } from 'nestjs-clerk';
-import type { AuthEntity, ClerkClient} from 'nestjs-clerk';
+import type { AuthEntity, ClerkClient } from 'nestjs-clerk';
 
 export class CatsController {
   constructor(@Client() private readonly clerkClient: ClerkClient) {}
