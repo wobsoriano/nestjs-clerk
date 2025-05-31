@@ -62,10 +62,10 @@ export class CatsController {
 
 Here are the decorators you can use into any of your injectables:
 
-- `@Auth()`: Injects the [Auth](https://clerk.com/docs/references/backend/types/auth-object) object.
-- `@Client()`: Injects an instance of the Clerk [JavaScript Backend SDK](https://clerk.com/docs/references/backend/overview).
-- `@Role()`: Checks if the user has a specific [role](https://clerk.com/docs/organizations/roles-permissions#roles).
-- `@Permission()`: Checks if the user has a specific [permission](https://clerk.com/docs/organizations/roles-permissions#permissions).
+- `@Auth()`: [Auth](https://clerk.com/docs/references/backend/types/auth-object) object.
+- `@Client()`: Instance of the Clerk [JavaScript Backend SDK](https://clerk.com/docs/references/backend/overview).
+- `@Role(role)`: Checks if the user has a specific [role](https://clerk.com/docs/organizations/roles-permissions#roles).
+- `@Permission(permission)`: Checks if the user has a specific [permission](https://clerk.com/docs/organizations/roles-permissions#permissions).
 
 ## License
 
