@@ -30,13 +30,17 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "prepublishOnly": "bun run build",
-    "release": "bumpp && npm publish"
+    "release": "bumpp && npm publish",
+    "format": "biome format --write src",
+    "lint": "biome lint --write src",
+    "check": "biome check --write src"
   },
   "peerDependencies": {
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@nestjs/common": "^11.1.2",
     "@nestjs/core": "^11.1.2",
     "@types/express": "^5.0.2",

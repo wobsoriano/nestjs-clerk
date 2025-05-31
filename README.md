@@ -21,14 +21,22 @@ Import the `ClerkModule` into the root module.
 
 ```ts
 import { Module } from '@nestjs/common';
-import { ClerkModule } from 'nestjs-clerk';
+import { ClerkModule, RoleGuard, PermissionGuard } from 'nestjs-clerk';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
-    ClerkModule.forRoot({
-      publishableKey: '',
-      secretKey: '',
+    ClerkModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        publishableKey: configService.get('CLERK_PUBLISHABLE_KEY'),
+        secretKey: configService.get('CLERK_SECRET_KEY'),
+      }),
     }),
+  ],
+  providers: [
+    { provide: APP_GUARD, useClass: RoleGuard },
+    { provide: APP_GUARD, useClass: PermissionGuard },
   ],
 })
 export class AppModule {}
@@ -56,6 +64,8 @@ Here are the decorators you can use into any of your injectables:
 
 - `@Auth()`: Injects the [Auth](https://clerk.com/docs/references/backend/types/auth-object) object.
 - `@Client()`: Injects an instance of the Clerk [JavaScript Backend SDK](https://clerk.com/docs/references/backend/overview).
+- `@Role`: Checks if the user has a specific [role](https://clerk.com/docs/organizations/roles-permissions#roles).
+- `@Permission`: Checks if the user has a specific [permission](https://clerk.com/docs/organizations/roles-permissions#permissions).
 
 ## License
 
