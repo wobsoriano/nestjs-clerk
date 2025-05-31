@@ -23,6 +23,7 @@ Import the `ClerkModule` into the root module.
 import { Module } from '@nestjs/common';
 import { ClerkModule, RoleGuard, PermissionGuard } from 'nestjs-clerk';
 import { APP_GUARD } from '@nestjs/core';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
