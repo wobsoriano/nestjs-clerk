@@ -17,7 +17,7 @@ CLERK_PUBLISHABLE_KEY=pk_*******
 CLERK_SECRET_KEY=sk_******
 ```
 
-Import the `ClerkModule` into the root module and configure it with your Clerk API keys.
+Import the `ClerkModule` into the root module.
 
 ```ts
 import { Module } from '@nestjs/common';
