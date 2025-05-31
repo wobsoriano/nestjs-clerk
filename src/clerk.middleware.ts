@@ -7,6 +7,7 @@ import type {
 import { InjectClerkClient } from './clerk.decorators';
 import type { ClerkClient } from '@clerk/backend';
 import { AuthStatus, constants } from '@clerk/backend/internal';
+import type { AuthEntity } from './clerk.interfaces';
 
 @Injectable()
 export class ClerkMiddleware implements NestMiddleware {
@@ -27,7 +28,6 @@ export class ClerkMiddleware implements NestMiddleware {
       return new Error('Clerk: unexpected handshake without redirect');
     }
 
-    // @ts-expect-error: todo
     req.auth = () => requestState.toAuth();
     next();
   }
@@ -49,5 +49,13 @@ export class ClerkMiddleware implements NestMiddleware {
       method: req.method,
       headers: new Headers(headers),
     });
+  }
+}
+
+declare global {
+  namespace Express {
+    interface Request {
+      auth: AuthEntity;
+    }
   }
 }

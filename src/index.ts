@@ -1,3 +1,4 @@
+export * from '@clerk/backend'
 export { ClerkModule } from './clerk.module'
-export { InjectClerkClient } from './clerk.decorators'
-export { ClerkMiddleware } from './clerk.middleware'
+export { Auth, Client, InjectClerkClient } from './clerk.decorators'
+export type { AuthEntity } from './clerk.interfaces'

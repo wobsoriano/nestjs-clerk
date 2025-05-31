@@ -35,25 +35,28 @@ import { ClerkModule } from 'nestjs-clerk';
 export class AppModule {}
 ```
 
-Access the `clerkClient` into any of your injectables by using the `@InjectClerkClient` decorator.
+## Decorators
 
 ```ts
-import { Injectable } from '@nestjs/common';
-import { InjectClerkClient } from 'nestjs-clerk';
-import { ClerkClient } from '@clerk/backend';
+import { Get } from '@nestjs/common';
+import { Auth, Client } from 'nestjs-clerk';
+import type { AuthEntity, ClerkClient} from 'nestjs-clerk';
 
-@Injectable()
-export class AppService {
-  public constructor(
-    @InjectClerkClient() private readonly clerkClient: ClerkClient
-  ) {
-    async getUser(): string {
-      const user = await this.clerkClient.users.getUser('user_id');
-      return `Hello, ${user.fullName}!`;
-    }
+export class CatsController {
+  constructor(@Client() private readonly clerkClient: ClerkClient) {}
+
+  @Get('/user')
+  async findAll(@Auth() auth: AuthEntity): Promise<string> {
+    const user = this.clerkClient.users.getUser(auth().userId);
+    return `Welcome, ${user.firstName} ${user.lastName}!`;
   }
 }
 ```
+
+Here are the decorators you can use into any of your injectables:
+
+- `@Auth()`: Injects the [Auth](https://clerk.com/docs/references/backend/types/auth-object) object.
+- `@Client()`: Injects an instance of the Clerk [JavaScript Backend SDK](https://clerk.com/docs/references/backend/overview).
 
 ## License
 
