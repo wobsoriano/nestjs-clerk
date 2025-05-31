@@ -21,7 +21,7 @@ Import the `ClerkModule` into the root module.
 
 ```ts
 import { Module } from '@nestjs/common';
-import { ClerkModule, RoleGuard, PermissionGuard } from 'nestjs-clerk';
+import { ClerkModule, RoleGuard, FeatureGuard, PermissionGuard } from 'nestjs-clerk';
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 
@@ -35,9 +35,11 @@ import { ConfigService } from '@nestjs/config';
       }),
     }),
   ],
+  // Optional guards
   providers: [
     { provide: APP_GUARD, useClass: RoleGuard },
     { provide: APP_GUARD, useClass: PermissionGuard },
+    { provide: APP_GUARD, useClass: FeatureGuard },
   ],
 })
 export class AppModule {}
@@ -67,6 +69,7 @@ Here are the decorators you can use into any of your injectables:
 - `@Client()`: Instance of the Clerk [JavaScript Backend SDK](https://clerk.com/docs/references/backend/overview).
 - `@Role(role)`: Checks if the user has a specific [role](https://clerk.com/docs/organizations/roles-permissions#roles).
 - `@Permission(permission)`: Checks if the user has a specific [permission](https://clerk.com/docs/organizations/roles-permissions#permissions).
+- `@Feature(feature)`: Check for specific feature. See [Clerk Billing](https://clerk.com/docs/billing/overview).
 
 ## License
 

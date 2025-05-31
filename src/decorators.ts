@@ -1,4 +1,4 @@
-import type { OrganizationCustomRoleKey } from '@clerk/types';
+import type { Autocomplete, OrganizationCustomRoleKey } from '@clerk/types';
 import {
 	type ExecutionContext,
 	Inject,
@@ -23,3 +23,6 @@ export const Role = (role: OrganizationCustomRoleKey) =>
 
 export const Permission = (permission: string) =>
 	SetMetadata('permission', permission);
+
+export const Feature = (feature: Autocomplete<`user:${string}` | `org:${string}`>) =>
+	SetMetadata('feature', feature);
