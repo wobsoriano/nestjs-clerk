@@ -52,7 +52,7 @@ import { Get } from '@nestjs/common';
 import { Auth, Client } from 'nestjs-clerk';
 import type { AuthEntity, ClerkClient } from 'nestjs-clerk';
 
-export class UserController {
+export class AppController {
   constructor(@Client() private readonly clerkClient: ClerkClient) {}
 
   @Get('/user')
